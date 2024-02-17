@@ -1,5 +1,5 @@
 let addToCardBtn = document.querySelectorAll(".add-to-card-btn");
-let sum = 0;
+let totalPrice = 0;
 for (const item of addToCardBtn) {
   item.addEventListener("click", function () {
     //   Catch title name****
@@ -12,12 +12,12 @@ for (const item of addToCardBtn) {
     let price = item.parentNode.childNodes[5].childNodes[1].innerText;
     let priceValueText = price.split(" ")[1];
     let priceValue = parseInt(priceValueText);
-    sum += priceValue;
-    console.log(sum);
+    totalPrice += priceValue;
+    console.log(totalPrice);
 
     //   show total price
     let total = document.getElementById("total-price");
-    total.innerText = sum;
+    total.innerText = totalPrice;
   });
 }
 
@@ -27,5 +27,24 @@ let applyBtn = document
     let discount = document.getElementById("discount-input");
     let discountInput = discount.value;
     let discountInputValue = discountInput.split(" ").join("").toUpperCase();
-    console.log(discountInputValue);
+    if (totalPrice >= 100) {
+      if (discountInputValue === "SELL100") {
+        let discountPrice = (totalPrice * 10) / 100;
+        let discountPriceInt = parseInt(discountPrice);
+        let discountDiv = document.getElementById("discount-price");
+        discountDiv.innerText = discountPriceInt;
+
+        let calculationTotalPrice = totalPrice - discountPriceInt;
+        console.log(calculationTotalPrice);
+
+        let totalCalculatePrice = document.getElementById('total-discount-price')
+        totalCalculatePrice.innerText = calculationTotalPrice
+        
+      } else {
+        console.log("discount pan nai");
+      }
+    } else {
+      let totalCalculatePrice = document.getElementById('total-discount-price')
+      totalCalculatePrice.innerText = totalPrice
+    }
   });
